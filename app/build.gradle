@@ -1,5 +1,4 @@
 apply plugin: 'com.android.application'
-
 android {
     compileSdkVersion 19
     buildToolsVersion "21.1.2"
@@ -42,8 +41,20 @@ task ndkBuild(type: Exec) {
     commandLine ndkbuild, '-C', file('src/main/jni').absolutePath
 }
 
+repositories{
+    maven {
+        name "rosjava-github"
+        url "https://github.com/rosjava/rosjava_mvn_repo/raw/master"
+    }
+    mavenLocal()
+    mavenCentral()
+}
 dependencies {
+
     compile fileTree(dir: 'libs', include: ['*.jar'])
     compile project(':libraries:rosandroid-core')
+    //compile 'org.ros.rosjava_core:rosjava:[0.2,0.3)'
+    compile 'org.ros.rosjava_messages:geometry_msgs'
+    compile 'org.ros.rosjava_messages:sensor_msgs'
 }
 

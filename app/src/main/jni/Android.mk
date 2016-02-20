@@ -17,14 +17,17 @@ LOCAL_PATH := $(call my-dir)
 PROJECT_ROOT_FROM_JNI:= ../../../../..
 PROJECT_ROOT:= $(call my-dir)/../../../../..
 
+LIBRARY_PATH:= $(call my-dir)/../../../libraries
+LIBRARY_PATH_FROM_JNI:= ../../../libraries
+
 include $(CLEAR_VARS)
 LOCAL_MODULE    := libpoint_cloud_jni_example
 LOCAL_SHARED_LIBRARIES := tango_client_api
 LOCAL_CFLAGS    := -std=c++11
 
-LOCAL_C_INCLUDES := $(PROJECT_ROOT)/tango-service-sdk/include/ \
-                    $(PROJECT_ROOT)/tango-gl/include \
-                    $(PROJECT_ROOT)/third-party/glm/
+LOCAL_C_INCLUDES := $(LIBRARY_PATH)/tango_support_api/include/ \
+                    $(LIBRARY_PATH)/tango-gl/include \
+                    $(LIBRARY_PATH)/third-party/glm/
 
 LOCAL_SRC_FILES := jni_interface.cc \
                    point_cloud_data.cc \
@@ -33,21 +36,21 @@ LOCAL_SRC_FILES := jni_interface.cc \
                    pose_data.cc \
                    scene.cc \
                    tango_event_data.cc \
-                   $(PROJECT_ROOT_FROM_JNI)/tango-gl/axis.cpp \
-                   $(PROJECT_ROOT_FROM_JNI)/tango-gl/camera.cpp \
-                   $(PROJECT_ROOT_FROM_JNI)/tango-gl/conversions.cpp \
-                   $(PROJECT_ROOT_FROM_JNI)/tango-gl/drawable_object.cpp \
-                   $(PROJECT_ROOT_FROM_JNI)/tango-gl/frustum.cpp \
-                   $(PROJECT_ROOT_FROM_JNI)/tango-gl/gesture_camera.cpp \
-                   $(PROJECT_ROOT_FROM_JNI)/tango-gl/grid.cpp \
-                   $(PROJECT_ROOT_FROM_JNI)/tango-gl/line.cpp \
-                   $(PROJECT_ROOT_FROM_JNI)/tango-gl/shaders.cpp \
-                   $(PROJECT_ROOT_FROM_JNI)/tango-gl/trace.cpp \
-                   $(PROJECT_ROOT_FROM_JNI)/tango-gl/transform.cpp \
-                   $(PROJECT_ROOT_FROM_JNI)/tango-gl/util.cpp
+                   $(LIBRARY_PATH_FROM_JNI)/tango-gl/axis.cpp \
+                   $(LIBRARY_PATH_FROM_JNI)/tango-gl/camera.cpp \
+                   $(LIBRARY_PATH_FROM_JNI)/tango-gl/conversions.cpp \
+                   $(LIBRARY_PATH_FROM_JNI)/tango-gl/drawable_object.cpp \
+                   $(LIBRARY_PATH_FROM_JNI)/tango-gl/frustum.cpp \
+                   $(LIBRARY_PATH_FROM_JNI)/tango-gl/gesture_camera.cpp \
+                   $(LIBRARY_PATH_FROM_JNI)/tango-gl/grid.cpp \
+                   $(LIBRARY_PATH_FROM_JNI)/tango-gl/line.cpp \
+                   $(LIBRARY_PATH_FROM_JNI)/tango-gl/shaders.cpp \
+                   $(LIBRARY_PATH_FROM_JNI)/tango-gl/trace.cpp \
+                   $(LIBRARY_PATH_FROM_JNI)/tango-gl/transform.cpp \
+                   $(LIBRARY_PATH_FROM_JNI)/tango-gl/util.cpp
 
 LOCAL_LDLIBS    := -llog -lGLESv2 -L$(SYSROOT)/usr/lib
 include $(BUILD_SHARED_LIBRARY)
 
-$(call import-add-path, $(PROJECT_ROOT))
+$(call import-add-path, $(LIBRARY_PATH))
 $(call import-module,tango_client_api)

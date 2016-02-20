@@ -30,7 +30,7 @@ extern "C" {
 
 //JNIEXPORT void JNICALL
 //Java_com_projecttango_experiments_nativepointcloud_TangoJNINative_UpdatePointCloud(
-//        JNIEnv*, jobject, const TangoXYZij* point_cloud) {
+//        JNIEnv*, jobject, cJNICALLonst TangoXYZij* point_cloud) {
 //    return app_data.UpdatePointCloud(point_cloud);
 //}
 
@@ -148,6 +148,18 @@ Java_com_projecttango_experiments_nativepointcloud_TangoJNINative_getPointCloudX
         JNIEnv* env, jobject) {
     return (env)->NewStringUTF(app.GetPointCloudXYZij().c_str());
 }
+
+JNIEXPORT void JNICALL
+Java_com_projecttango_experiments_nativepointcloud_TangoJNINative_setAppParameters(
+        JNIEnv* env, jobject obj){
+    JavaVM* vm;
+    (env)->GetJavaVM(&vm);
+    app.setJavaVM(vm);
+    jclass cls = env->GetObjectClass(obj);
+    app.setNode((jclass) (env)->NewGlobalRef(cls),(env)->NewGlobalRef(obj));
+}
+
+
 
 //JNIEXPORT jTangoPoseData JNICALL
 //Java_com_projecttango_experiments_nativepointcloud_TangoJNINative_getPoseData(

@@ -1,17 +1,17 @@
-/home/dominic/tango-examples-c/point-cloud-jni-example/app/src/main/obj/local/armeabi-v7a/objs/point_cloud_jni_example/tango_event_data.o: \
- /home/dominic/tango-examples-c/point-cloud-jni-example/app/src/main/jni/tango_event_data.cc \
- /home/dominic/Downloads/android-ndk-r10e/sources/cxx-stl/gnu-libstdc++/4.8/include/sstream \
- /home/dominic/tango-examples-c/point-cloud-jni-example/app/src/main/jni/tango-point-cloud/tango_event_data.h \
- /home/dominic/Downloads/android-ndk-r10e/platforms/android-19/arch-arm/usr/include/jni.h \
- /home/dominic/Downloads/android-ndk-r10e/sources/cxx-stl/gnu-libstdc++/4.8/include/mutex \
- /home/dominic/tango-examples-c/point-cloud-jni-example/app/src/main/jni/../../../../../tango_client_api/include/tango_client_api.h
+/home/jae/Dev/hackathon/app/src/main/obj/local/armeabi-v7a/objs/point_cloud_jni_example/tango_event_data.o: \
+ /home/jae/Dev/hackathon/app/src/main/jni/tango_event_data.cc \
+ /opt/android-ndk/sources/cxx-stl/gnu-libstdc++/4.8/include/sstream \
+ /home/jae/Dev/hackathon/app/src/main/jni/tango-point-cloud/tango_event_data.h \
+ /opt/android-ndk/platforms/android-19/arch-arm/usr/include/jni.h \
+ /opt/android-ndk/sources/cxx-stl/gnu-libstdc++/4.8/include/mutex \
+ /home/jae/Dev/hackathon/app/src/main/jni/../../../libraries/tango_client_api/include/tango_client_api.h
 
-/home/dominic/Downloads/android-ndk-r10e/sources/cxx-stl/gnu-libstdc++/4.8/include/sstream:
+/opt/android-ndk/sources/cxx-stl/gnu-libstdc++/4.8/include/sstream:
 
-/home/dominic/tango-examples-c/point-cloud-jni-example/app/src/main/jni/tango-point-cloud/tango_event_data.h:
+/home/jae/Dev/hackathon/app/src/main/jni/tango-point-cloud/tango_event_data.h:
 
-/home/dominic/Downloads/android-ndk-r10e/platforms/android-19/arch-arm/usr/include/jni.h:
+/opt/android-ndk/platforms/android-19/arch-arm/usr/include/jni.h:
 
-/home/dominic/Downloads/android-ndk-r10e/sources/cxx-stl/gnu-libstdc++/4.8/include/mutex:
+/opt/android-ndk/sources/cxx-stl/gnu-libstdc++/4.8/include/mutex:
 
-/home/dominic/tango-examples-c/point-cloud-jni-example/app/src/main/jni/../../../../../tango_client_api/include/tango_client_api.h:
+/home/jae/Dev/hackathon/app/src/main/jni/../../../libraries/tango_client_api/include/tango_client_api.h:

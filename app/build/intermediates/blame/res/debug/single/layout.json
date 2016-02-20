@@ -1,18 +1,26 @@
 [
     {
-        "merged": "/home/dominic/Desktop/point-cloud-jni-example/app/build/intermediates/res/merged/debug/layout/activity_pointcloud.xml",
-        "source": "/home/dominic/Desktop/point-cloud-jni-example/app/src/main/res/layout/activity_pointcloud.xml"
-    },
-    {
-        "merged": "/home/dominic/tango-examples-c/point-cloud-jni-example/app/build/intermediates/res/merged/debug/layout/activity_pointcloud.xml",
-        "source": "/home/dominic/tango-examples-c/point-cloud-jni-example/app/src/main/res/layout/activity_pointcloud.xml"
+        "merged": "/home/jae/Dev/hackathon/app/build/intermediates/res/merged/debug/layout/activity_pointcloud.xml",
+        "source": "/home/jae/Dev/hackathon/app/src/main/res/layout/activity_pointcloud.xml"
     },
     {
         "merged": "/home/dominic/tango-examples-c/point-cloud-jni-example/app/build/intermediates/res/merged/debug/layout/master_chooser.xml",
         "source": "/home/dominic/tango-examples-c/point-cloud-jni-example/app/build/intermediates/exploded-aar/point-cloud-jni-example.libraries/rosandroid-core/unspecified/res/layout/master_chooser.xml"
     },
     {
+        "merged": "/home/jae/Dev/hackathon/app/build/intermediates/res/merged/debug/layout/master_chooser.xml",
+        "source": "/home/jae/Dev/hackathon/app/build/intermediates/exploded-aar/hackathon.libraries/rosandroid-core/unspecified/res/layout/master_chooser.xml"
+    },
+    {
         "merged": "/home/dominic/Desktop/point-cloud-jni-example/app/build/intermediates/res/merged/debug/layout/master_chooser.xml",
         "source": "/home/dominic/Desktop/point-cloud-jni-example/app/build/intermediates/exploded-aar/point-cloud-jni-example.libraries/rosandroid-core/unspecified/res/layout/master_chooser.xml"
+    },
+    {
+        "merged": "/home/dominic/Desktop/point-cloud-jni-example/app/build/intermediates/res/merged/debug/layout/activity_pointcloud.xml",
+        "source": "/home/dominic/Desktop/point-cloud-jni-example/app/src/main/res/layout/activity_pointcloud.xml"
+    },
+    {
+        "merged": "/home/dominic/tango-examples-c/point-cloud-jni-example/app/build/intermediates/res/merged/debug/layout/activity_pointcloud.xml",
+        "source": "/home/dominic/tango-examples-c/point-cloud-jni-example/app/src/main/res/layout/activity_pointcloud.xml"
     }
 ]

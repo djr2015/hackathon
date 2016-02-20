@@ -20,111 +20,114 @@
 #include "tango-point-cloud/pose_data.h"
 
 namespace {
-const float kMeterToMillimeter = 1000.0f;
+    const float kMeterToMillimeter = 1000.0f;
 }  // namespace
 
 namespace tango_point_cloud {
 
-PoseData::PoseData() {}
+    PoseData::PoseData() {}
 
-PoseData::~PoseData() {}
+    PoseData::~PoseData() {}
 
-void PoseData::UpdatePose(const TangoPoseData* pose_data) {
-  cur_pose_ = *pose_data;
+    void PoseData::UpdatePose(const TangoPoseData* pose_data) {
+        cur_pose_ = *pose_data;
 
-  if (prev_pose_.status_code != cur_pose_.status_code) {
-    // Reset pose counter when the status changed.
-    pose_counter_ = 0;
-  }
+        if (prev_pose_.status_code != cur_pose_.status_code) {
+            // Reset pose counter when the status changed.
+            pose_counter_ = 0;
+        }
 
-  // Increase pose counter.
-  ++pose_counter_;
-  FormatPoseString();
-  prev_pose_ = cur_pose_;
-}
+        // Increase pose counter.
+        ++pose_counter_;
+        FormatPoseString();
+        prev_pose_ = cur_pose_;
+    }
 
-std::string PoseData::GetPoseDebugString() { return pose_string_; }
+    std::string PoseData::GetPoseDebugString() { return pose_string_; }
 
-TangoPoseData PoseData::GetPoseData() { return cur_pose_;};
+    TangoPoseData PoseData::GetPoseData() { return cur_pose_;};
 
-glm::mat4 PoseData::GetLatestPoseMatrix() {
-  return GetMatrixFromPose(cur_pose_);
-}
+    glm::mat4 PoseData::GetLatestPoseMatrix() {
+        return GetMatrixFromPose(cur_pose_);
+    }
 
-glm::mat4 PoseData::GetExtrinsicsAppliedOpenGLWorldFrame(
-    const glm::mat4 pose_matrix) {
-  // This full multiplication is equal to:
-  //   opengl_world_T_opengl_camera =
-  //      opengl_world_T_start_service *
-  //      start_service_T_device *
-  //      device_T_imu *
-  //      imu_T_depth_camera *
-  //      depth_camera_T_opengl_camera;
-  //
-  // More information about frame transformation can be found here:
-  // Frame of reference:
-  //   https://developers.google.com/project-tango/overview/frames-of-reference
-  // Coordinate System Conventions:
-  //   https://developers.google.com/project-tango/overview/coordinate-systems
-  return tango_gl::conversions::opengl_world_T_tango_world() * pose_matrix *
-         glm::inverse(GetImuTDevice()) * GetImuTDepthCamera() *
-         tango_gl::conversions::depth_camera_T_opengl_camera();
-}
+    glm::mat4 PoseData::GetExtrinsicsAppliedOpenGLWorldFrame(
+            const glm::mat4 pose_matrix) {
+        // This full multiplication is equal to:
+        //   opengl_world_T_opengl_camera =
+        //      opengl_world_T_start_service *
+        //      start_service_T_device *
+        //      device_T_imu *
+        //      imu_T_depth_camera *
+        //      depth_camera_T_opengl_camera;
+        //
+        // More information about frame transformation can be found here:
+        // Frame of reference:
+        //   https://developers.google.com/project-tango/overview/frames-of-reference
+        // Coordinate System Conventions:
+        //   https://developers.google.com/project-tango/overview/coordinate-systems
+        return tango_gl::conversions::opengl_world_T_tango_world() * pose_matrix *
+               glm::inverse(GetImuTDevice()) * GetImuTDepthCamera() *
+               tango_gl::conversions::depth_camera_T_opengl_camera();
+    }
 
-glm::mat4 PoseData::GetMatrixFromPose(const TangoPoseData& pose) {
-  // Convert pose data to vec3 for position and quaternion for orientation.
-  //
-  // More information about frame transformation can be found here:
-  // Frame of reference:
-  //   https://developers.google.com/project-tango/overview/frames-of-reference
-  // Coordinate System Conventions:
-  //   https://developers.google.com/project-tango/overview/coordinate-systems
-  glm::vec3 translation =
-      glm::vec3(pose.translation[0], pose.translation[1], pose.translation[2]);
-  glm::quat rotation = glm::quat(pose.orientation[3], pose.orientation[0],
-                                 pose.orientation[1], pose.orientation[2]);
-  glm::mat4 matrix =
-      glm::translate(glm::mat4(1.0f), translation) * glm::mat4_cast(rotation);
-  return matrix;
-}
+    glm::mat4 PoseData::GetMatrixFromPose(const TangoPoseData& pose) {
+        // Convert pose data to vec3 for position and quaternion for orientation.
+        //
+        // More information about frame transformation can be found here:
+        // Frame of reference:
+        //   https://developers.google.com/project-tango/overview/frames-of-reference
+        // Coordinate System Conventions:
+        //   https://developers.google.com/project-tango/overview/coordinate-systems
+        glm::vec3 translation =
+                glm::vec3(pose.translation[0], pose.translation[1], pose.translation[2]);
+        glm::quat rotation = glm::quat(pose.orientation[3], pose.orientation[0],
+                                       pose.orientation[1], pose.orientation[2]);
+        glm::mat4 matrix =
+                glm::translate(glm::mat4(1.0f), translation) * glm::mat4_cast(rotation);
+        return matrix;
+    }
 
-std::string PoseData::GetStringFromStatusCode(TangoPoseStatusType status) {
-  std::string ret_string;
-  switch (status) {
-    case TANGO_POSE_INITIALIZING:
-      ret_string = "initializing";
-      break;
-    case TANGO_POSE_VALID:
-      ret_string = "valid";
-      break;
-    case TANGO_POSE_INVALID:
-      ret_string = "invalid";
-      break;
-    case TANGO_POSE_UNKNOWN:
-      ret_string = "unknown";
-      break;
-    default:
-      ret_string = "status_code_invalid";
-      break;
-  }
-  return ret_string;
-}
+    std::string PoseData::GetStringFromStatusCode(TangoPoseStatusType status) {
+        std::string ret_string;
+        switch (status) {
+            case TANGO_POSE_INITIALIZING:
+                ret_string = "initializing";
+                break;
+            case TANGO_POSE_VALID:
+                ret_string = "valid";
+                break;
+            case TANGO_POSE_INVALID:
+                ret_string = "invalid";
+                break;
+            case TANGO_POSE_UNKNOWN:
+                ret_string = "unknown";
+                break;
+            default:
+                ret_string = "status_code_invalid";
+                break;
+        }
+        return ret_string;
+    }
 
-void PoseData::FormatPoseString() {
-  std::stringstream string_stream;
-  string_stream.setf(std::ios_base::fixed, std::ios_base::floatfield);
-  string_stream.precision(3);
-  string_stream <</* "status: " << GetStringFromStatusCode(cur_pose_.status_code)
+    void PoseData::FormatPoseString() {
+        std::stringstream string_stream;
+        string_stream.setf(std::ios_base::fixed, std::ios_base::floatfield);
+        string_stream.precision(3);
+        string_stream <</* "status: " << GetStringFromStatusCode(cur_pose_.status_code)
                 << ", count: " << pose_counter_ << ", delta time (ms): "
                 << (cur_pose_.timestamp - prev_pose_.timestamp) *
-                       kMeterToMillimeter << */ "Position (m): ["
-                << cur_pose_.translation[0] << ", " << cur_pose_.translation[1]
-                << ", " << cur_pose_.translation[2] << "]"
-                << " , \n Orientation: [" << cur_pose_.orientation[0] << ",  "
-                << cur_pose_.orientation[1] << ", " << cur_pose_.orientation[2]
-                << ", " << cur_pose_.orientation[3] << "] \n timestamp:" << cur_pose_.timestamp ;
-  pose_string_ = string_stream.str();
-  string_stream.flush();
-}
+                       kMeterToMillimeter << */
+        cur_pose_.translation[0] << ", " << cur_pose_.translation[1]
+        << ", " << cur_pose_.translation[2]
+        << "%" << cur_pose_.orientation[0] << ",  "
+        << cur_pose_.orientation[1] << ", " << cur_pose_.orientation[2]
+        << ", " << cur_pose_.orientation[3] << "%" << cur_pose_.timestamp ;
+
+        // FORMAT: <position>%<quaternion>%<timestamp>
+
+        pose_string_ = string_stream.str();
+        string_stream.flush();
+    }
 
 }  // namespace tango_point_cloud

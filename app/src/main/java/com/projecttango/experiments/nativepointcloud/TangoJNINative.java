@@ -93,4 +93,5 @@ public class TangoJNINative {
 
   public static native String getPointCloudXYZij();
 
+  public static native void setAppParameters();
 }

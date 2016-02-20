@@ -70,13 +70,13 @@ class PointCloudApp {
   //
   // @param pose: The current point cloud returned by the service,
   //              caller allocated.
-  void onPointCloudAvailable(const TangoXYZij* xyz_ij);
+  void onPointCloudAvailable(PointCloudApp* app, const TangoXYZij* xyz_ij);
 
   // Tango service pose callback function for pose data. Called when new
   // information about device pose is available from the Tango Service.
   //
   // @param pose: The current pose returned by the service, caller allocated.
-  void onPoseAvailable(const TangoPoseData* pose);
+  void onPoseAvailable(PointCloudApp* app, const TangoPoseData* pose);
 
   // Tango service event callback function for event data. Called when new events
   // are available from the Tango Service.
@@ -120,7 +120,7 @@ class PointCloudApp {
   //
   // @param: camera_type, camera type includes first person, third person and
   //         top down
-  void SetCameraType(tango_gl::GestureCamera::CameraType camera_type);
+  void SetCameraType(tango_gl::GestureCamera::CameraType camera_typeon);
 
   // Touch event passed from android activity. This function only supports two
   // touches.
@@ -134,6 +134,13 @@ class PointCloudApp {
   void OnTouchEvent(int touch_count, tango_gl::GestureCamera::TouchEvent event,
                     float x0, float y0, float x1, float y1);
 
+  void publishNodeMessage(int select, std::string str);
+
+  void setJavaVM(JavaVM* vm){javaVM = vm;};
+  JavaVM* getJavaVM(){return javaVM;};
+  void setNode (jclass _class, jobject _obj){ nodeObj = _obj; nodeClass=_class;};
+  jclass getNodeClass(){return nodeClass;};
+  jobject getNodeObj(){return nodeObj;};
  private:
   // Get a pose in matrix format with extrinsics in OpenGl space.
   //
@@ -190,6 +197,11 @@ class PointCloudApp {
 
   // Tango service version string.
   std::string tango_core_version_string_;
+
+  JavaVM * javaVM = 0;
+
+  jclass nodeClass;
+  jobject nodeObj;
 };
 }  // namespace tango_point_cloud
 

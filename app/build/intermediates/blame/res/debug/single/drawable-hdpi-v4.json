@@ -1,10 +1,14 @@
 [
     {
-        "merged": "/home/dominic/Desktop/point-cloud-jni-example/app/build/intermediates/res/merged/debug/drawable-hdpi-v4/icon.png",
-        "source": "/home/dominic/Desktop/point-cloud-jni-example/app/build/intermediates/exploded-aar/point-cloud-jni-example.libraries/rosandroid-core/unspecified/res/drawable-hdpi-v4/icon.png"
+        "merged": "/home/jae/Dev/hackathon/app/build/intermediates/res/merged/debug/drawable-hdpi-v4/icon.png",
+        "source": "/home/jae/Dev/hackathon/app/build/intermediates/exploded-aar/hackathon.libraries/rosandroid-core/unspecified/res/drawable-hdpi-v4/icon.png"
     },
     {
         "merged": "/home/dominic/tango-examples-c/point-cloud-jni-example/app/build/intermediates/res/merged/debug/drawable-hdpi-v4/icon.png",
         "source": "/home/dominic/tango-examples-c/point-cloud-jni-example/app/build/intermediates/exploded-aar/point-cloud-jni-example.libraries/rosandroid-core/unspecified/res/drawable-hdpi-v4/icon.png"
+    },
+    {
+        "merged": "/home/dominic/Desktop/point-cloud-jni-example/app/build/intermediates/res/merged/debug/drawable-hdpi-v4/icon.png",
+        "source": "/home/dominic/Desktop/point-cloud-jni-example/app/build/intermediates/exploded-aar/point-cloud-jni-example.libraries/rosandroid-core/unspecified/res/drawable-hdpi-v4/icon.png"
     }
 ]

@@ -30,7 +30,7 @@ const int kVersionStringLength = 128;
 void onPointCloudAvailableRouter(void* context, const TangoXYZij* xyz_ij) {
   using namespace tango_point_cloud;
   PointCloudApp* app = static_cast<PointCloudApp*>(context);
-  app->onPointCloudAvailable(xyz_ij);
+  app->onPointCloudAvailable(app, xyz_ij);
 }
 
 // This function routes onPoseAvailable callbacks to the application object for
@@ -42,7 +42,7 @@ void onPointCloudAvailableRouter(void* context, const TangoXYZij* xyz_ij) {
 void onPoseAvailableRouter(void* context, const TangoPoseData* pose) {
   using namespace tango_point_cloud;
   PointCloudApp* app = static_cast<PointCloudApp*>(context);
-  app->onPoseAvailable(pose);
+  app->onPoseAvailable(app, pose);
 }
 
 // This function routes onTangoEvent callbacks to the application object for
@@ -59,14 +59,16 @@ void onTangoEventAvailableRouter(void* context, const TangoEvent* event) {
 }  // namespace
 
 namespace tango_point_cloud {
-void PointCloudApp::onPointCloudAvailable(const TangoXYZij* xyz_ij) {
+void PointCloudApp::onPointCloudAvailable(PointCloudApp* app, const TangoXYZij* xyz_ij) {
   std::lock_guard<std::mutex> lock(point_cloud_mutex_);
   point_cloud_data_.UpdatePointCloud(xyz_ij);
+  app->publishNodeMessage(0,point_cloud_data_.GetStringXYZij());
 }
 
-void PointCloudApp::onPoseAvailable(const TangoPoseData* pose) {
+void PointCloudApp::onPoseAvailable(PointCloudApp* app, const TangoPoseData* pose) {
   std::lock_guard<std::mutex> lock(pose_mutex_);
   pose_data_.UpdatePose(pose);
+  app->publishNodeMessage(1,pose_data_.GetPoseDebugString());
 }
 
 void PointCloudApp::onTangoEventAvailable(const TangoEvent* event) {
@@ -321,6 +323,28 @@ void PointCloudApp::OnTouchEvent(int touch_count,
                                       float x0, float y0, float x1, float y1) {
   main_scene_.OnTouchEvent(touch_count, event, x0, y0, x1, y1);
 }
+
+void PointCloudApp::publishNodeMessage(int select, std::string str){
+  JavaVM* vm = this->getJavaVM();
+  if(vm == 0){
+    return;
+  }
+  JNIEnv * env;
+  vm->AttachCurrentThread(&env,NULL);
+  jclass nClass = this->getNodeClass();
+  jobject nObj = this->getNodeObj();
+  if(select == 0){
+    jmethodID method = env->GetMethodID(nClass, "publishPointCloud","()ba");
+    env->CallVoidMethod(nObj, method, env->NewStringUTF(str.c_str()));
+  }
+  else{
+    jmethodID method = env->GetMethodID(nClass, "publishPose","()V");
+    env->CallVoidMethod(nObj, method,env->NewStringUTF(str.c_str()) );
+  }
+}
+
+
+
 
 glm::mat4 PointCloudApp::GetPoseMatrixAtTimestamp(double timstamp) {
   TangoPoseData pose_start_service_T_device;

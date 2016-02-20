@@ -1,6 +1,6 @@
 [
     {
-        "outputFile": "/home/dominic/tango-examples-c/point-cloud-jni-example/app/build/intermediates/res/merged/debug/values-v11/values-v11.xml",
+        "outputFile": "/home/jae/Dev/hackathon/app/build/intermediates/res/merged/debug/values-v11/values-v11.xml",
         "map": [
             {
                 "to": {
@@ -12,7 +12,7 @@
                     "endOffset": 187
                 },
                 "from": {
-                    "file": "/home/dominic/tango-examples-c/point-cloud-jni-example/app/src/main/res/values-v11/styles.xml",
+                    "file": "/home/jae/Dev/hackathon/app/src/main/res/values-v11/styles.xml",
                     "position": {
                         "startLine": 6,
                         "startColumn": 4,
@@ -39,6 +39,32 @@
                 },
                 "from": {
                     "file": "/home/dominic/Desktop/point-cloud-jni-example/app/src/main/res/values-v11/styles.xml",
+                    "position": {
+                        "startLine": 6,
+                        "startColumn": 4,
+                        "startOffset": 177,
+                        "endLine": 8,
+                        "endColumn": 12,
+                        "endOffset": 309
+                    }
+                }
+            }
+        ]
+    },
+    {
+        "outputFile": "/home/dominic/tango-examples-c/point-cloud-jni-example/app/build/intermediates/res/merged/debug/values-v11/values-v11.xml",
+        "map": [
+            {
+                "to": {
+                    "startLine": 2,
+                    "startColumn": 4,
+                    "startOffset": 55,
+                    "endLine": 4,
+                    "endColumn": 12,
+                    "endOffset": 187
+                },
+                "from": {
+                    "file": "/home/dominic/tango-examples-c/point-cloud-jni-example/app/src/main/res/values-v11/styles.xml",
                     "position": {
                         "startLine": 6,
                         "startColumn": 4,
