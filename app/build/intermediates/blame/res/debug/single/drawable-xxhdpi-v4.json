@@ -1,0 +1,10 @@
+[
+    {
+        "merged": "/home/dominic/Desktop/point-cloud-jni-example/app/build/intermediates/res/merged/debug/drawable-xxhdpi-v4/ic_launcher.png",
+        "source": "/home/dominic/Desktop/point-cloud-jni-example/app/src/main/res/drawable-xxhdpi/ic_launcher.png"
+    },
+    {
+        "merged": "/home/dominic/tango-examples-c/point-cloud-jni-example/app/build/intermediates/res/merged/debug/drawable-xxhdpi-v4/ic_launcher.png",
+        "source": "/home/dominic/tango-examples-c/point-cloud-jni-example/app/src/main/res/drawable-xxhdpi/ic_launcher.png"
+    }
+]
