@@ -70,13 +70,13 @@ class PointCloudApp {
   //
   // @param pose: The current point cloud returned by the service,
   //              caller allocated.
-  void onPointCloudAvailable(PointCloudApp* app, const TangoXYZij* xyz_ij);
+  void onPointCloudAvailable( const TangoXYZij* xyz_ij);
 
   // Tango service pose callback function for pose data. Called when new
   // information about device pose is available from the Tango Service.
   //
   // @param pose: The current pose returned by the service, caller allocated.
-  void onPoseAvailable(PointCloudApp* app, const TangoPoseData* pose);
+  void onPoseAvailable( const TangoPoseData* pose);
 
   // Tango service event callback function for event data. Called when new events
   // are available from the Tango Service.
