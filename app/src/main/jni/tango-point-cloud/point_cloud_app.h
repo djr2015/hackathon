@@ -134,14 +134,15 @@ class PointCloudApp {
   void OnTouchEvent(int touch_count, tango_gl::GestureCamera::TouchEvent event,
                     float x0, float y0, float x1, float y1);
 
-  void publishNodeMessage(int select, std::string str);
+  bool getPcData(){return got_pc_data;}
+  bool getPoseData(){return got_pose_data;}
 
-  void setJavaVM(JavaVM* vm){javaVM = vm;};
-  JavaVM* getJavaVM(){return javaVM;};
-  void setNode (jclass _class, jobject _obj){ nodeObj = _obj; nodeClass=_class;};
-  jclass getNodeClass(){return nodeClass;};
-  jobject getNodeObj(){return nodeObj;};
- private:
+  void setPcData(bool _got_pc_data){got_pc_data = _got_pc_data;}
+  void setPoseData(bool _got_pose_data){got_pose_data = _got_pose_data;}
+
+private:
+  bool got_pc_data = false;
+  bool got_pose_data = false;
   // Get a pose in matrix format with extrinsics in OpenGl space.
   //
   // @param: timstamp, timestamp of the target pose.

@@ -62,13 +62,15 @@ namespace tango_point_cloud {
 void PointCloudApp::onPointCloudAvailable(const TangoXYZij* xyz_ij) {
   std::lock_guard<std::mutex> lock(point_cloud_mutex_);
   point_cloud_data_.UpdatePointCloud(xyz_ij);
-  this->publishNodeMessage(0,point_cloud_data_.GetStringXYZij());
+  setPcData(true);
+  //this->publishNodeMessage(0,point_cloud_data_.GetStringXYZij());
 }
 
 void PointCloudApp::onPoseAvailable( const TangoPoseData* pose) {
   std::lock_guard<std::mutex> lock(pose_mutex_);
   pose_data_.UpdatePose(pose);
-  this->publishNodeMessage(1,pose_data_.GetPoseDebugString());
+  setPoseData(true);
+  //this->publishNodeMessage(1,pose_data_.GetPoseDebugString());
 }
 
 void PointCloudApp::onTangoEventAvailable(const TangoEvent* event) {
@@ -89,8 +91,11 @@ PointCloudApp::~PointCloudApp() {
 // ********************
 
 std::string PointCloudApp::GetPointCloudXYZij() {
-  std::lock_guard<std::mutex> lock(pose_mutex_);
-  return point_cloud_data_.GetStringXYZij();
+  std::lock_guard<std::mutex> lock(point_cloud_mutex_);
+  if(getPcData())
+    return point_cloud_data_.GetStringXYZij();
+  else
+    return nullptr;
 }
 
     // ************************
@@ -286,7 +291,10 @@ void PointCloudApp::DeleteResources() { main_scene_.DeleteResources(); }
 
 std::string PointCloudApp::GetPoseString() {
   std::lock_guard<std::mutex> lock(pose_mutex_);
-  return pose_data_.GetPoseDebugString();
+  if(getPoseData())
+    return pose_data_.GetPoseDebugString();
+  else
+    return nullptr;
 }
 
 std::string PointCloudApp::GetEventString() {
@@ -323,27 +331,6 @@ void PointCloudApp::OnTouchEvent(int touch_count,
                                       float x0, float y0, float x1, float y1) {
   main_scene_.OnTouchEvent(touch_count, event, x0, y0, x1, y1);
 }
-
-void PointCloudApp::publishNodeMessage(int select, std::string str){
-  JavaVM* vm = this->getJavaVM();
-  if(vm == 0){
-    return;
-  }
-  JNIEnv * env;
-  vm->AttachCurrentThread(&env,NULL);
-  jclass nClass = this->getNodeClass();
-  jobject nObj = this->getNodeObj();
-  if(select == 0){
-    jmethodID method = env->GetMethodID(nClass, "publishPointCloud","()ba");
-    env->CallVoidMethod(nObj, method, env->NewStringUTF(str.c_str()));
-  }
-  else{
-    jmethodID method = env->GetMethodID(nClass, "publishPose","()V");
-    env->CallVoidMethod(nObj, method,env->NewStringUTF(str.c_str()) );
-  }
-}
-
-
 
 
 glm::mat4 PointCloudApp::GetPoseMatrixAtTimestamp(double timstamp) {

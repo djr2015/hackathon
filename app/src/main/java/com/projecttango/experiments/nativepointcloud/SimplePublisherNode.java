@@ -40,7 +40,7 @@ import std_msgs.Header;
 
 public class SimplePublisherNode extends AbstractNodeMain implements NodeMain {
 
-    private static final String TAG = SimplePublisherNode.class.getSimpleName();
+    private final String TAG = SimplePublisherNode.class.getSimpleName();
     public Publisher<sensor_msgs.PointCloud2> publisher1;
     public Publisher<geometry_msgs.PoseStamped> publisher2;
     @Override
@@ -49,6 +49,11 @@ public class SimplePublisherNode extends AbstractNodeMain implements NodeMain {
     }
 
     final int[] seq = {0,0};
+
+
+    public void simpleFunction(){
+        return;
+    }
 
     public void publishPointCloud(String points){
 
@@ -102,6 +107,8 @@ public class SimplePublisherNode extends AbstractNodeMain implements NodeMain {
         head.getStamp().secs = (int)timestamp;
         head.getStamp().nsecs = (int)((10^9)*(timestamp - (int)timestamp));
         head.setFrameId("0");
+
+        Log.i(TAG, "this works");
 
         publisher1.publish(pc2);
 
@@ -171,12 +178,14 @@ public class SimplePublisherNode extends AbstractNodeMain implements NodeMain {
         //final Publisher<geometry_msgs.PoseStamped> publisher = connectedNode.newPublisher("android/orientation", "geometry_msgs/PoseStamped");
         publisher1 = connectedNode.newPublisher(GraphName.of("points"), PointCloud2._TYPE);
         publisher2 = connectedNode.newPublisher("android/orientation", "geometry_msgs/PoseStamped");
+        //TangoJNINative.setAppParameters();
 
 
         final CancellableLoop loop = new CancellableLoop() {
             @Override
             protected void loop() throws InterruptedException {
-
+                publishPointCloud(TangoJNINative.getPointCloudXYZij());
+                publishPose(TangoJNINative.getPoseString());
                 Thread.sleep(1);
             }
         };
